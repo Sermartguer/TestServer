@@ -20,4 +20,26 @@ router.get("/", function (req, res, next) {
   });
 });
 
+//POST /api/news
+router.post("/", function (req, res, next) {
+  let { type, id } = req.body;
+  if (type === "news") {
+    News.findByIdAndUpdate({ _id: id }, { archivedDate: new Date() }).then(
+      (news, err) => {
+        if (err) {
+          return res.status(200).send({ error: "Error update new" });
+        }
+        return res.status(200).send(news);
+      }
+    );
+  } else if (type === "archived") {
+    News.findByIdAndDelete({ _id: id }).thend((news, err) => {
+      if (err) {
+        return res.status(200).send({ error: "Error delete new" });
+      }
+      return res.status(200).send(news);
+    });
+  }
+});
+
 module.exports = router;
