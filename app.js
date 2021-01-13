@@ -13,6 +13,9 @@ mongoose.connect("mongodb://localhost/news", {
   useUnifiedTopology: true,
 });
 
+require("./src/models/News");
+app.use(require("./src/routes"));
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
